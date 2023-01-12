@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <div class="card login-logout-tab">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Sign In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Authentication" asp-action="Register" asp-route-returnUrl="@Context.Request.Path">Sign Up</a>
+                    </li>
+                </ul>
+                <div class="card-content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @await RenderSectionAsync("Scripts", required: false)
+}
+<script>
+    $(function(){
+        var current = location.pathname;
+        $('.nav-tabs li a').each(funtcion(){
+            var $this = $(this);
+            if(current.indexOf($this.attr('href')) !== -1){
+                $this.addClass('active');
+            }
+        })
+    })
+</script>
