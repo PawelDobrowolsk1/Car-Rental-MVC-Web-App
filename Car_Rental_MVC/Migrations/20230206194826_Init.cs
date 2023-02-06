@@ -9,6 +9,30 @@ namespace Car_Rental_MVC.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Cars",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Make = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Engine = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Horsepower = table.Column<int>(type: "int", nullable: false),
+                    Year = table.Column<int>(type: "int", nullable: false),
+                    Seats = table.Column<int>(type: "int", nullable: false),
+                    Doors = table.Column<int>(type: "int", nullable: false),
+                    Fuel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Transmisson = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Available = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cars", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -45,36 +69,6 @@ namespace Car_Rental_MVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cars",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Category = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Make = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Model = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Engine = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Horsepower = table.Column<int>(type: "int", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
-                    Seats = table.Column<int>(type: "int", nullable: false),
-                    Doors = table.Column<int>(type: "int", nullable: false),
-                    Fuel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Transmisson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Available = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cars", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cars_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RentInfo",
                 columns: table => new
                 {
@@ -102,19 +96,16 @@ namespace Car_Rental_MVC.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cars_UserId",
-                table: "Cars",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RentInfo_CarId",
                 table: "RentInfo",
-                column: "CarId");
+                column: "CarId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RentInfo_UserId",
                 table: "RentInfo",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
