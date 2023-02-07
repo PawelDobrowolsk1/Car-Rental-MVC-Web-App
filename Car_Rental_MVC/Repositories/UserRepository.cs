@@ -1,4 +1,5 @@
-﻿using Car_Rental_MVC.Entities;
+﻿using AutoMapper;
+using Car_Rental_MVC.Entities;
 using Car_Rental_MVC.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
@@ -11,11 +12,13 @@ namespace Car_Rental_MVC.Repositories
     {
         private readonly CarRentalManagerContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IMapper _mapper;
 
-        public UserRepository(CarRentalManagerContext context, IPasswordHasher<User> passwordHasher)          
+        public UserRepository(CarRentalManagerContext context, IPasswordHasher<User> passwordHasher, IMapper mapper)
         {
             _context = context;
             _passwordHasher = passwordHasher;
+            _mapper = mapper;
         }
 
         public bool EmailInUse(RegisterModelDto dto)
@@ -49,13 +52,40 @@ namespace Car_Rental_MVC.Repositories
             return claimsPrincipal;
         }
 
+        public IEnumerable<UserModelDto> GetAllUsers()
+        {
+            var users = _context.Users
+                .Include(r => r.Role)
+                .ToList();
+
+            if (!users.Any())
+            {
+                return null;
+            }
+            var usersDto = new List<UserModelDto>();
+            foreach (var user in users)
+            {
+                var userDto = new UserModelDto()
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    NumberRentedCars = _context.RentInfo.Where(u => u.Id == user.Id).Count(),
+                    Role = user.Role.Name
+                };
+                usersDto.Add(userDto);
+            }
+
+            return usersDto;
+        }
+
         public void RegisterUser(RegisterModelDto dto)
         {
             var newUser = new User()
             {
-                Email= dto.Email,
-                FirstName= dto.FirstName,
-                LastName= dto.LastName,
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
                 RoleId = dto.RoleId
             };
 

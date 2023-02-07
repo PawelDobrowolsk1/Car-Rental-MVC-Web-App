@@ -10,10 +10,12 @@ namespace Car_Rental_MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ICarRepository _carRepository;
+        private readonly IUserRepository _userRepository;
 
-        public HomeController(ICarRepository carRepository)
+        public HomeController(ICarRepository carRepository, IUserRepository userRepository)
         {
             _carRepository = carRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -104,6 +106,12 @@ namespace Car_Rental_MVC.Controllers
 
             TempData["success"] = "Car successfully deleted ";
             return Redirect("/Home/Cars");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult UsersInfo()
+        {
+            return View(_userRepository.GetAllUsers());
         }
 
     }

@@ -9,5 +9,6 @@ namespace Car_Rental_MVC.Repositories
         ClaimsPrincipal GenerateClaimsPrincipal(LoginModelDto dto);
         void RegisterUser(RegisterModelDto dto);
         bool EmailInUse(RegisterModelDto dto);
+        IEnumerable<UserModelDto> GetAllUsers();
     }
 }
