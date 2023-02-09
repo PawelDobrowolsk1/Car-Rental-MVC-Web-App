@@ -9,8 +9,8 @@ namespace Car_Rental_MVC.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "The First Name field is required")]
         [DisplayName("First Name")]
+        [Required(ErrorMessage = "The First Name field is required")]
         public string FirstName { get; set; }
 
         [DisplayName("Last Name")]

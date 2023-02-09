@@ -79,6 +79,17 @@ namespace Car_Rental_MVC.Repositories
             return usersDto;
         }
 
+        public UserModelDto GetUserInfoDetails(string email)
+        {
+            var user = _context
+                .Users
+                .FirstOrDefault(u => u.Email == email);
+
+            var userDto = _mapper.Map<UserModelDto>(user);
+
+            return userDto;
+        }
+
         public void RegisterUser(RegisterModelDto dto)
         {
             var newUser = new User()

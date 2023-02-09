@@ -10,6 +10,7 @@ namespace Car_Rental_MVC
         {
             CreateMap<Car, CarModelDto>();
             CreateMap<CarModelDto, Car>();
+            CreateMap<User, UserModelDto>();
         }
     }
 }

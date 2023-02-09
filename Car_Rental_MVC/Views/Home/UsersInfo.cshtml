@@ -4,7 +4,7 @@
     ViewData["Title"] = "UsersInfo";
 }
 
-<h1>UsersInfo</h1>
+<h1>Users info</h1>
 
 @if(Model != null)
 {
@@ -47,6 +47,9 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "UserInfoDetails", new {email=item.Email, returnUrl="/Home/UsersInfo"}, new {@class="btn btn-info"})
                     </td>
                 </tr>
             }

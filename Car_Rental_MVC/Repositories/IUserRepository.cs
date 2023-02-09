@@ -10,5 +10,6 @@ namespace Car_Rental_MVC.Repositories
         void RegisterUser(RegisterModelDto dto);
         bool EmailInUse(RegisterModelDto dto);
         IEnumerable<UserModelDto> GetAllUsers();
+        UserModelDto GetUserInfoDetails(string email);
     }
 }

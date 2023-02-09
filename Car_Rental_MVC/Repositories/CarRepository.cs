@@ -21,7 +21,7 @@ namespace Car_Rental_MVC.Repositories
         {
             var car = _context
                 .Cars
-                .FirstOrDefault(c => c.Id == carId);
+                .Find(carId);
 
             var carDto = _mapper.Map<CarModelDto>(car);
 

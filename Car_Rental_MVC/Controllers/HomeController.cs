@@ -92,6 +92,7 @@ namespace Car_Rental_MVC.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
         public IActionResult AddCar(CarModelDto carDto)
         {
             _carRepository.AddCar(carDto);
@@ -108,11 +109,19 @@ namespace Car_Rental_MVC.Controllers
             return Redirect("/Home/Cars");
         }
 
+        [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult UsersInfo()
         {
             return View(_userRepository.GetAllUsers());
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IActionResult UserInfoDetails(string email, string returnUrl)
+        {
+            TempData["ReturnUrl"] = returnUrl;
+            return View(_userRepository.GetUserInfoDetails(email));
+        }
     }
 }
