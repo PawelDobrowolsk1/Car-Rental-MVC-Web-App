@@ -31,6 +31,8 @@ namespace Car_Rental_MVC.Models
         public string? PostalCode { get; set; }
 
         public string Role { get; set; }
+
+        [DisplayName("Rented Cars")]
         public int NumberRentedCars { get; set; }
 
     }
