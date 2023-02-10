@@ -11,7 +11,7 @@
             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="RentedCars">Rented Cars</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" title="Manage">Hello @User.Identity.Name!</a>
+            <a class="nav-link text-dark" title="Manage" asp-area="" asp-controller="Home" asp-action="EditUserProfileByUser" asp-route-email="@User.Identity.Name" asp-route-returnUrl="@Context.Request.Path">Hello @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-controller="Authentication" asp-action="Logout">
