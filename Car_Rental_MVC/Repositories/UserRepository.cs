@@ -83,6 +83,7 @@ namespace Car_Rental_MVC.Repositories
         {
             var user = _context
                 .Users
+                .Include(r => r.Role)
                 .FirstOrDefault(u => u.Email == email);
 
             var userDto = _mapper.Map<UserModelDto>(user);
@@ -104,6 +105,25 @@ namespace Car_Rental_MVC.Repositories
 
             newUser.PasswordHash = hashedPassword;
             _context.Add(newUser);
+            _context.SaveChanges();
+        }
+
+        public void SaveEditedUserProfile(UserModelDto userDto)
+        {
+            var user = _context
+                .Users
+                .FirstOrDefault(u=> u.Email == userDto.Email);
+
+            if (user == null)
+                throw new Exception();
+
+            user.FirstName = userDto.FirstName;
+            user.LastName = userDto.LastName;
+            user.ContactNumber= userDto.ContactNumber;
+            user.PostalCode= userDto.PostalCode;
+            user.City= userDto.City;
+            user.Street= userDto.Street;
+
             _context.SaveChanges();
         }
 

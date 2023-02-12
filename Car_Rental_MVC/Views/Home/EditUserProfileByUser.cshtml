@@ -12,8 +12,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <input asp-for="Email" disabled class="form-control" />
             </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
@@ -31,6 +30,11 @@
                 <span asp-validation-for="ContactNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="PostalCode" class="control-label"></label>
+                <input asp-for="PostalCode" class="form-control" />
+                <span asp-validation-for="PostalCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="City" class="control-label"></label>
                 <input asp-for="City" class="form-control" />
                 <span asp-validation-for="City" class="text-danger"></span>
@@ -39,11 +43,6 @@
                 <label asp-for="Street" class="control-label"></label>
                 <input asp-for="Street" class="form-control" />
                 <span asp-validation-for="Street" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostalCode" class="control-label"></label>
-                <input asp-for="PostalCode" class="form-control" />
-                <span asp-validation-for="PostalCode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

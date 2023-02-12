@@ -10,7 +10,8 @@ namespace Car_Rental_MVC
         {
             CreateMap<Car, CarModelDto>();
             CreateMap<CarModelDto, Car>();
-            CreateMap<User, UserModelDto>();
+            CreateMap<User, UserModelDto>()
+                .ForMember(d => d.Role, u => u.MapFrom(r => r.Role.Name));
         }
     }
 }

@@ -139,5 +139,15 @@ namespace Car_Rental_MVC.Controllers
             TempData["ReturnUrl"] = returnUrl;
             return View(_userRepository.GetUserInfoDetails(email));
         }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult EditUserProfileByUser(UserModelDto userDto)
+        {
+            userDto.Email = User.Identity.Name;
+            _userRepository.SaveEditedUserProfile(userDto);
+
+            return Redirect("/");
+        }
     }
 }
