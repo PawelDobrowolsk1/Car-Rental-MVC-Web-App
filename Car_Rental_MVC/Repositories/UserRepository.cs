@@ -123,6 +123,23 @@ namespace Car_Rental_MVC.Repositories
             user.PostalCode= userDto.PostalCode;
             user.City= userDto.City;
             user.Street= userDto.Street;
+            if (userDto.Role != null)
+            {
+                if (userDto.Role == "User")
+                {
+                    user.RoleId = 1;
+                }
+
+                if (userDto.Role == "Manager")
+                {
+                    user.RoleId = 2;
+                }
+
+                if (userDto.Role == "Admin")
+                {
+                    user.RoleId = 3;
+                }
+            }
 
             _context.SaveChanges();
         }

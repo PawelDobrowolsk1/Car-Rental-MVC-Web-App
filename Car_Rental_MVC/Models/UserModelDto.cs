@@ -19,6 +19,7 @@ namespace Car_Rental_MVC.Models
         public string LastName { get; set; }
 
         [DisplayName("Phone number")]
+        [Phone, MaxLength(9)]
         public string? ContactNumber { get; set; }
 
         [DisplayName("City")]
@@ -34,6 +35,5 @@ namespace Car_Rental_MVC.Models
 
         [DisplayName("Rented Cars")]
         public int NumberRentedCars { get; set; }
-
     }
 }

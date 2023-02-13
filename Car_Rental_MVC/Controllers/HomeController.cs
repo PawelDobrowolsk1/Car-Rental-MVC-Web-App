@@ -132,6 +132,21 @@ namespace Car_Rental_MVC.Controllers
             return View(_userRepository.GetUserInfoDetails(email));
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public IActionResult EditUserProfileByAdmin(UserModelDto userDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(userDto);
+            }
+
+            _userRepository.SaveEditedUserProfile(userDto);
+
+            return Redirect("/Home/UsersInfo");
+        }
+
         [HttpGet]
         [Authorize]
         public IActionResult EditUserProfileByUser(string email, string returnUrl)
@@ -142,9 +157,11 @@ namespace Car_Rental_MVC.Controllers
 
         [HttpPost]
         [Authorize]
+        [ValidateAntiForgeryToken]
         public IActionResult EditUserProfileByUser(UserModelDto userDto)
         {
             userDto.Email = User.Identity.Name;
+            
             _userRepository.SaveEditedUserProfile(userDto);
 
             return Redirect("/");
