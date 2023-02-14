@@ -70,7 +70,7 @@ namespace Car_Rental_MVC.Repositories
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
-                    NumberRentedCars = _context.RentInfo.Where(u => u.Id == user.Id).Count(),
+                    NumberRentedCars = _context.RentInfo.Where(u => u.UserId == user.Id && u.IsGivenBack == false).Count(),
                     Role = user.Role.Name
                 };
                 usersDto.Add(userDto);
@@ -87,6 +87,8 @@ namespace Car_Rental_MVC.Repositories
                 .FirstOrDefault(u => u.Email == email);
 
             var userDto = _mapper.Map<UserModelDto>(user);
+
+            userDto.NumberRentedCars = _context.RentInfo.Where(u => u.UserId == user.Id && u.IsGivenBack == false).Count();
 
             return userDto;
         }

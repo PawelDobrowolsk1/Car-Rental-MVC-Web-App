@@ -1,4 +1,5 @@
 ﻿using Car_Rental_MVC.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 

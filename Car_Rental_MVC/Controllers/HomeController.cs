@@ -2,6 +2,7 @@
 using Car_Rental_MVC.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics.Eventing.Reader;
 
 namespace Car_Rental_MVC.Controllers
@@ -161,6 +162,12 @@ namespace Car_Rental_MVC.Controllers
         public IActionResult EditUserProfileByUser(UserModelDto userDto)
         {
             userDto.Email = User.Identity.Name;
+            ModelState.Remove("Email");
+            ModelState.Remove("Role");
+            if(!ModelState.IsValid)
+            {
+                return View(userDto);
+            }
             
             _userRepository.SaveEditedUserProfile(userDto);
 
