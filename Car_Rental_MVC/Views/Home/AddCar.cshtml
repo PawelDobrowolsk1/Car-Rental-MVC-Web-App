@@ -8,7 +8,15 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
+                <select asp-for="Category" class="form-control">
+                    <option value="Hatchback">Hatchback</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="Coupe">Coupe</option>
+                    <option value="Cabriolet">Cabriolet</option>
+                    <option value="Combi">Combi</option>
+                    <option value="Minivan">Minivan</option>
+                    <option value="SUV">SUV</option>
+                </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -43,17 +51,29 @@
             </div>
             <div class="form-group">
                 <label asp-for="Doors" class="control-label"></label>
-                <input asp-for="Doors" class="form-control" />
+                <select asp-for="Doors" class="form-control">
+                    <option value="2">2</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
                 <span asp-validation-for="Doors" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Fuel" class="control-label"></label>
-                <input asp-for="Fuel" class="form-control" />
+                <select asp-for="Fuel" class="form-control">
+                    <option value="ON">ON</option>
+                    <option value="PB">PB</option>
+                    <option value="Electric">Electric</option>
+                    <option value="Hybrid">Hybrid</option>
+                </select>
                 <span asp-validation-for="Fuel" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Transmisson" class="control-label"></label>
-                <input asp-for="Transmisson" class="form-control" />
+                <select asp-for="Transmisson" class="form-control">
+                    <option value="Manual">Manual</option>
+                    <option value="Automatic">Automatic</option>
+                </select>
                 <span asp-validation-for="Transmisson" class="text-danger"></span>
             </div>
             <div class="form-group">

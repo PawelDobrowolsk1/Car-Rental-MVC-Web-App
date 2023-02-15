@@ -21,9 +21,9 @@ namespace Car_Rental_MVC.Repositories
             _mapper = mapper;
         }
 
-        public bool EmailInUse(RegisterModelDto dto)
+        public bool EmailInUse(string email)
         {
-            var user = _context.Users.Any(u => u.Email == dto.Email);
+            var user = _context.Users.Any(u => u.Email == email);
 
             if (user)
             {

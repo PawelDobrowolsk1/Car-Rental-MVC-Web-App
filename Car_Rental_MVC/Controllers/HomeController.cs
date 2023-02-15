@@ -96,6 +96,11 @@ namespace Car_Rental_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddCar(CarModelDto carDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(carDto);
+            }
+
             _carRepository.AddCar(carDto);
 
             return Redirect("/Home/Cars");
@@ -138,6 +143,10 @@ namespace Car_Rental_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditUserProfileByAdmin(UserModelDto userDto)
         {
+            if (_userRepository.EmailInUse(userDto.Email))
+            {
+                ModelState.AddModelError("EmailIsTaken", "That email is taken.");
+            }
             if (!ModelState.IsValid)
             {
                 return View(userDto);

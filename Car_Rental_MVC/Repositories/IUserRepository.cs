@@ -8,7 +8,7 @@ namespace Car_Rental_MVC.Repositories
         bool UserNameOrPasswordInvalid(LoginModelDto dto);
         ClaimsPrincipal GenerateClaimsPrincipal(LoginModelDto dto);
         void RegisterUser(RegisterModelDto dto);
-        bool EmailInUse(RegisterModelDto dto);
+        bool EmailInUse(string email);
         IEnumerable<UserModelDto> GetAllUsers();
         UserModelDto GetUserInfoDetails(string email);
         void SaveEditedUserProfile(UserModelDto userDto);

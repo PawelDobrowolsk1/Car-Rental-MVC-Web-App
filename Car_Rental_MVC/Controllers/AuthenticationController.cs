@@ -74,7 +74,7 @@ namespace Car_Rental_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userRepository.EmailInUse(dto))
+                if (_userRepository.EmailInUse(dto.Email))
                 {
                     ModelState.AddModelError("RegisterError", "That email is taken.");
                     return View(dto);
