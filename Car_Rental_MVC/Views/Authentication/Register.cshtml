@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
 }
 
+@Html.AntiForgeryToken
 
 <form method="post">
     <div asp-validation-summary="All" class="text-danger"></div>

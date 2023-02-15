@@ -4,6 +4,9 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_AuthenticationLayout.cshtml";
 }
+
+@Html.AntiForgeryToken()
+
 <div calss="col-md-10 offset-md-1">
     <section>
         <div class="login-form-icon">
