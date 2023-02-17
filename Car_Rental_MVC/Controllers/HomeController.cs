@@ -127,6 +127,7 @@ namespace Car_Rental_MVC.Controllers
         public IActionResult UserInfoDetails(string email, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
+            var cars = _carRepository.RentedCarsByUser(email);
             return View(_userRepository.GetUserInfoDetails(email));
         }
 

@@ -90,6 +90,25 @@ namespace Car_Rental_MVC.Repositories
 
             userDto.NumberRentedCars = _context.RentInfo.Where(u => u.UserId == user.Id && u.IsGivenBack == false).Count();
 
+            var rentedCarInfo = _context
+                .RentInfo
+                .Include(c => c.Car)
+                .Where(u => u.UserId == user.Id && u.IsGivenBack == false)
+                .ToList();
+
+            var carsDtosList = new List<CarModelDto>();
+
+            if (rentedCarInfo.Any())
+            {
+                for (int i = 0; i < rentedCarInfo.Count(); i++)
+                {
+                    var carDto = _mapper.Map<CarModelDto>(rentedCarInfo[i].Car);
+                    carsDtosList.Add(carDto);
+                }
+            }
+
+            userDto.Cars = carsDtosList;
+
             return userDto;
         }
 
