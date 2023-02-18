@@ -7,6 +7,7 @@ using System.Diagnostics.Eventing.Reader;
 
 namespace Car_Rental_MVC.Controllers
 {
+ 
     [Authorize]
     public class HomeController : Controller
     {

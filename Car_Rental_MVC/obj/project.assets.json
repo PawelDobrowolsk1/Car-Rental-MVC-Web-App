@@ -10196,19 +10196,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Paweł\\.nuget\\packages\\": {}
+    "C:\\Users\\HP\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\Car_Rental_MVC.csproj",
+      "projectUniqueName": "C:\\Users\\HP\\Desktop\\Car-Rental-MVC-Web-App\\Car_Rental_MVC\\Car_Rental_MVC.csproj",
       "projectName": "Car_Rental_MVC",
-      "projectPath": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\Car_Rental_MVC.csproj",
-      "packagesPath": "C:\\Users\\Paweł\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\obj\\",
+      "projectPath": "C:\\Users\\HP\\Desktop\\Car-Rental-MVC-Web-App\\Car_Rental_MVC\\Car_Rental_MVC.csproj",
+      "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\HP\\Desktop\\Car-Rental-MVC-Web-App\\Car_Rental_MVC\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Paweł\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

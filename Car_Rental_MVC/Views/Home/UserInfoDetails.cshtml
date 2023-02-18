@@ -110,7 +110,7 @@
                         @Html.DisplayFor(modelItem => item.Horsepower)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new {carId=item.Id, returnUrl=Context.Request.Path}, new {@class="btn btn-info"})
+                        @Html.ActionLink("Details", "Details", new {carId=item.Id, returnUrl=Context.Request.Path + "?email=" + Model.Email + "&returnUrl=%2FHome%2FUsersInfo"}, new {@class="btn btn-info"})
                     </td>
                 </tr>
             }

@@ -544,3 +544,7 @@ C:\Users\Paweł\Desktop\IT\.Kurs_C#\.Programs\#.My_Programs\CarRental\CarRental_
 C:\Users\Paweł\Desktop\IT\.Kurs_C#\.Programs\#.My_Programs\CarRental\CarRental_ASP.NET MVC\Car_Rental_MVC\Car_Rental_MVC\bin\Debug\net6.0\AngleSharp.Css.dll
 C:\Users\Paweł\Desktop\IT\.Kurs_C#\.Programs\#.My_Programs\CarRental\CarRental_ASP.NET MVC\Car_Rental_MVC\Car_Rental_MVC\bin\Debug\net6.0\HtmlSanitizer.dll
 C:\Users\Paweł\Desktop\IT\.Kurs_C#\.Programs\#.My_Programs\CarRental\CarRental_ASP.NET MVC\Car_Rental_MVC\Car_Rental_MVC\bin\Debug\net6.0\System.Collections.Immutable.dll
+C:\Users\HP\Desktop\Car-Rental-MVC-Web-App\Car_Rental_MVC\bin\Debug\net6.0\AngleSharp.dll
+C:\Users\HP\Desktop\Car-Rental-MVC-Web-App\Car_Rental_MVC\bin\Debug\net6.0\AngleSharp.Css.dll
+C:\Users\HP\Desktop\Car-Rental-MVC-Web-App\Car_Rental_MVC\bin\Debug\net6.0\HtmlSanitizer.dll
+C:\Users\HP\Desktop\Car-Rental-MVC-Web-App\Car_Rental_MVC\bin\Debug\net6.0\System.Collections.Immutable.dll
