@@ -19,7 +19,7 @@
     }
     @if (User.Identity.IsAuthenticated)
     {
-        @if (User.IsInRole("Admin"))
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
         {
             <div class="col-md-6 text-lg-end">
                 <a class="btn btn-warning" asp-controller="Home" asp-action="AddCar" asp-route-returnUrl="@Context.Request.Path">Add a car</a>

@@ -7,7 +7,7 @@ using System.Diagnostics.Eventing.Reader;
 
 namespace Car_Rental_MVC.Controllers
 {
- 
+
     [Authorize]
     public class HomeController : Controller
     {
@@ -86,14 +86,14 @@ namespace Car_Rental_MVC.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         public IActionResult AddCar()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager")]
         [ValidateAntiForgeryToken]
         public IActionResult AddCar(CarModelDto carDto)
         {
@@ -128,12 +128,11 @@ namespace Car_Rental_MVC.Controllers
         public IActionResult UserInfoDetails(string email, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
-            var cars = _carRepository.RentedCarsByUser(email);
             return View(_userRepository.GetUserInfoDetails(email));
         }
 
         [HttpGet]
-        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult EditUserProfileByAdmin(string email, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
@@ -145,10 +144,13 @@ namespace Car_Rental_MVC.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult EditUserProfileByAdmin(UserModelDto userDto)
         {
+            ModelState.Remove("Cars");
+
             if (_userRepository.EmailInUse(userDto.Email))
             {
                 ModelState.AddModelError("EmailIsTaken", "That email is taken.");
             }
+
             if (!ModelState.IsValid)
             {
                 return View(userDto);
@@ -175,6 +177,7 @@ namespace Car_Rental_MVC.Controllers
             userDto.Email = User.Identity.Name;
             ModelState.Remove("Email");
             ModelState.Remove("Role");
+            ModelState.Remove("Cars");
             if(!ModelState.IsValid)
             {
                 return View(userDto);
