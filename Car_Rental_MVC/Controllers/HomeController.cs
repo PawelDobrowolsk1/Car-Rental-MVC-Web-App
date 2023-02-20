@@ -136,21 +136,18 @@ namespace Car_Rental_MVC.Controllers
         public IActionResult EditUserProfileByAdmin(string email, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
+            TempData["UserEmail"] = email;
             return View(_userRepository.GetUserInfoDetails(email));
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public IActionResult EditUserProfileByAdmin(UserModelDto userDto)
+        public IActionResult EditUserProfileByAdmin(UserModelDto userDto, string UserEmail)
         {
+            userDto.Email = UserEmail;
             ModelState.Remove("Cars");
-
-            if (_userRepository.EmailInUse(userDto.Email))
-            {
-                ModelState.AddModelError("EmailIsTaken", "That email is taken.");
-            }
-
+            ModelState.Remove("Email");
             if (!ModelState.IsValid)
             {
                 return View(userDto);
