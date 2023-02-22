@@ -161,6 +161,10 @@ namespace Car_Rental_MVC.Repositories
                     user.RoleId = 3;
                 }
             }
+            if (userDto.NewPassword != null && userDto.ConfirmNewPassword != null) 
+            {
+                user.PasswordHash = _passwordHasher.HashPassword(user, userDto.NewPassword);
+            }
 
             _context.SaveChanges();
         }
