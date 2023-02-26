@@ -18,6 +18,10 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+a{
+
+}
+
 /*for table control*/
 div.login-logout-tab div.card-header{
     padding: 0px 0px 12px 0px;

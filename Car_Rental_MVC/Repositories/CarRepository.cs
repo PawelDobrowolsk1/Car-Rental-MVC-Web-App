@@ -112,7 +112,7 @@ namespace Car_Rental_MVC.Repositories
         public void AddCar(CarModelDto carDto)
         {
             var car = _mapper.Map<Car>(carDto);
-            _context.Add(car);
+            _context.Cars.Add(car);
             _context.SaveChanges();
         }
 
