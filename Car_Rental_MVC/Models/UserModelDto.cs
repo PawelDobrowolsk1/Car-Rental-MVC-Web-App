@@ -47,6 +47,6 @@ namespace Car_Rental_MVC.Models
         [DisplayName("Rented Cars")]
         public int NumberRentedCars { get; set; }
 
-        public List<CarModelDto> Cars { get; set; }
+        public List<CarModelDto>? Cars { get; set; }
     }
 }

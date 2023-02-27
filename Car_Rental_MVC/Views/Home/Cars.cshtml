@@ -108,13 +108,13 @@
                     {
                         if (item.Available)
                         {
-                            @Html.ActionLink("Rent", "RentCar", new { email = User.Identity.Name, carId = item.Id },
+                            @Html.ActionLink("Rent", "RentCar", new {carId = item.Id },
                                                                 new{@class="btn btn-success"})
 
                         }
                         else
                         {
-                            @Html.ActionLink("Rent", "RentCar", new { email = User.Identity.Name, carId = item.Id },
+                            @Html.ActionLink("Rent", "RentCar", new {carId = item.Id },
                                                                 new{@class="btn btn-success disabled"})
                         }
                     }

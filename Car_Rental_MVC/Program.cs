@@ -2,6 +2,7 @@ using Car_Rental_MVC;
 using Car_Rental_MVC.Entities;
 using Car_Rental_MVC.Middleware;
 using Car_Rental_MVC.Repositories;
+using Car_Rental_MVC.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<CarRentalManagerContext>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<CarRentalSeeder>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<ErrorHandlingMiddleware>();

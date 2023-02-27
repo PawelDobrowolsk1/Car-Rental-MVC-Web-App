@@ -65,14 +65,9 @@ namespace Car_Rental_MVC.Repositories
             var usersDto = new List<UserModelDto>();
             foreach (var user in users)
             {
-                var userDto = new UserModelDto()
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Email = user.Email,
-                    NumberRentedCars = _context.RentInfo.Where(u => u.UserId == user.Id && u.IsGivenBack == false).Count(),
-                    Role = user.Role.Name
-                };
+                var userDto = _mapper.Map<UserModelDto>(user);
+                userDto.NumberRentedCars = _context.RentInfo.Where(u => u.UserId == user.Id && u.IsGivenBack == false).Count();
+
                 usersDto.Add(userDto);
             }
 
@@ -171,9 +166,7 @@ namespace Car_Rental_MVC.Repositories
 
         public bool UserNameOrPasswordInvalid(LoginModelDto dto)
         {
-            var user = _context.Users
-                .Include(r => r.Role)
-                .FirstOrDefault(e => e.Email == dto.Email);
+            var user = _context.Users.FirstOrDefault(e => e.Email == dto.Email);
 
             if (user is null)
             {

@@ -30,9 +30,9 @@ namespace Car_Rental_MVC.Repositories
 
         public IEnumerable<CarModelDto> GetAll()
         {
-            var cars = _context.Cars.ToList();
+            var cars = _context.Cars.AsEnumerable();
 
-            var carsDtos = _mapper.Map<List<CarModelDto>>(cars);
+            var carsDtos = _mapper.Map<IEnumerable<CarModelDto>>(cars);
 
             return carsDtos;
         }

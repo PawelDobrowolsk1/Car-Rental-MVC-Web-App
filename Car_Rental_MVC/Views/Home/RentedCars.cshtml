@@ -68,7 +68,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("Details", "Details", new { carId=item.Id, returnUrl="/Home/RentedCars" }, new{@class="btn btn-info"})
-                        @Html.ActionLink("Give Back", "GiveBackCar", new { email = User.Identity.Name, carId=item.Id }, 
+                        @Html.ActionLink("Give Back", "GiveBackCar", new { carId=item.Id }, 
                                                                      new {@class="btn btn-warning"})
                     </td>
                 </tr>

@@ -1,5 +1,7 @@
-﻿using Car_Rental_MVC.Models;
+﻿using Car_Rental_MVC.Exceptions;
+using Car_Rental_MVC.Models;
 using Car_Rental_MVC.Repositories;
+using Car_Rental_MVC.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -13,11 +15,13 @@ namespace Car_Rental_MVC.Controllers
     {
         private readonly ICarRepository _carRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ICarRepository carRepository, IUserRepository userRepository)
+        public HomeController(ICarRepository carRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _carRepository = carRepository;
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -40,46 +44,57 @@ namespace Car_Rental_MVC.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Cars()
+        public async Task<IActionResult> Cars()
         {
-            return View(_carRepository.GetAll());
+            //return View(_carRepository.GetAll());
+            return View(await _unitOfWork.Car.GetAllDtoAsync());
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Details(int carId, string returnUrl)
+        public async Task<IActionResult> Details(int carId, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
-            return View(_carRepository.GetCarById(carId));
+            //var car = _carRepository.GetCarById(carId);
+            var car = await _unitOfWork.Car.GetFirstOrDefaultDtoAsync(x => x.Id == carId);
+
+            if(car == null)
+                return NotFound();
+
+            return View(car);
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> RentCar(string email, int carId)
+        public async Task<IActionResult> RentCar(int carId)
         {
-            if (email != null && carId != null)
+            if (carId == null)
             {
-                await _carRepository.RentCarAsync(email, carId);
-
-                TempData["success"] = "Car successfully rented ";
-                return Redirect("Cars");
+                throw new NotFoundException("Car not found");
             }
+            //await _carRepository.RentCarAsync(UserId, carId);
+            await _unitOfWork.Car.RentCarAsync(User.Identity.Name, carId);
+            await _unitOfWork.SaveAsync();
 
-            return Redirect("/");
+            TempData["success"] = "Car successfully rented ";
+            return Redirect("Cars");
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult RentedCars()
+        public async Task<IActionResult> RentedCars()
         {
-            return View(_carRepository.RentedCarsByUser(User.Identity.Name));
+            //return View(_carRepository.RentedCarsByUser(User.Identity.Name));
+            return View(await _unitOfWork.Car.RentedCarsByUser(User.Identity.Name));
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult GiveBackCar(string email, int carId)
+        public async Task<IActionResult> GiveBackCar(int carId)
         {
-            _carRepository.GiveBackCar(email, carId);
+            //_carRepository.GiveBackCar(User.Identity.Name, carId);
+            await _unitOfWork.Car.ReturnCar(User.Identity.Name, carId);
+            await _unitOfWork.SaveAsync();
 
             TempData["success"] = "Car successfully returned";
             return Redirect("RentedCars");
@@ -95,22 +110,25 @@ namespace Car_Rental_MVC.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin, Manager")]
         [ValidateAntiForgeryToken]
-        public IActionResult AddCar(CarModelDto carDto)
+        public async Task<IActionResult> AddCar(CarModelDto carDto)
         {
             if (!ModelState.IsValid)
             {
                 return View(carDto);
             }
 
-            _carRepository.AddCar(carDto);
+            //_carRepository.AddCar(carDto);
+            await _unitOfWork.Car.AddCarAsync(carDto);
 
             return Redirect("/Home/Cars");
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult DeleteCar(int carId)
+        public async Task<IActionResult> DeleteCar(int carId)
         {
-            _carRepository.DeleteCar(carId);
+            //_carRepository.DeleteCar(carId);
+            await _unitOfWork.Car.DeleteCarAsync(carId);
+            await _unitOfWork.SaveAsync();
 
             TempData["success"] = "Car successfully deleted ";
             return Redirect("/Home/Cars");

@@ -58,13 +58,8 @@ namespace Car_Rental_MVC.Controllers
 
             await HttpContext.SignInAsync(claimsPrincipal);
             
-
             TempData["success"] = "Successful login!";
-            if (string.IsNullOrEmpty(returnUrl))
-            {
-                return Redirect("/");
-            }
-            return LocalRedirect(returnUrl);
+            return LocalRedirect(returnUrl ??= "/");
         }
 
         [HttpPost("Register")]
@@ -83,12 +78,8 @@ namespace Car_Rental_MVC.Controllers
                 _userRepository.RegisterUser(dto);
 
                 TempData["success"] = "Successful registration!";
-                if (string.IsNullOrEmpty(returnUrl))
-                {
-                    return Redirect("/");
-                }
-
-                return LocalRedirect(returnUrl);
+              
+                return LocalRedirect(returnUrl ??= "/");
             }
 
             return View(dto);
