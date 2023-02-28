@@ -1,43 +1,59 @@
 ﻿using AutoMapper;
 using Car_Rental_MVC.Entities;
+using Car_Rental_MVC.Exceptions;
 using Car_Rental_MVC.Models;
+using Car_Rental_MVC.Repositories.IRepositories;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Car_Rental_MVC.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<User, UserModelDto>, IUserRepository
     {
         private readonly CarRentalManagerContext _context;
-        private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IMapper _mapper;
+        private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IHttpContextAccessor _accessor;
 
-        public UserRepository(CarRentalManagerContext context, IPasswordHasher<User> passwordHasher, IMapper mapper)
+        public UserRepository(CarRentalManagerContext context, IMapper mapper,
+            IPasswordHasher<User> passwordHasher, IHttpContextAccessor accessor) : base(context, mapper)
         {
             _context = context;
-            _passwordHasher = passwordHasher;
             _mapper = mapper;
+            _passwordHasher = passwordHasher;
+            _accessor = accessor;
         }
-
-        public bool EmailInUse(string email)
+        public async Task RegisterAsync(RegisterModelDto dto)
         {
-            var user = _context.Users.Any(u => u.Email == email);
-
-            if (user)
+            var newUser = new User()
             {
-                return true;
-            }
+                Email = dto.Email,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
+                RoleId = dto.RoleId
+            };
 
-            return false;
+            var hashedPassword = _passwordHasher.HashPassword(newUser, dto.Password);
+
+            newUser.PasswordHash = hashedPassword;
+            await AddAsync(newUser);
         }
 
-        public ClaimsPrincipal GenerateClaimsPrincipal(LoginModelDto dto)
+        public async Task LoginAsync(LoginModelDto dto)
         {
             var user = _context.Users
                 .Include(r => r.Role)
-                .FirstOrDefault(e => e.Email == dto.Email);
+                .SingleOrDefault(e => e.Email == dto.Email) ?? throw new NotFoundException("User not found.");
 
             var claims = new List<Claim>()
             {
@@ -49,10 +65,78 @@ namespace Car_Rental_MVC.Repositories
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            return claimsPrincipal;
+            await _accessor.HttpContext.SignInAsync(claimsPrincipal);
         }
 
-        public IEnumerable<UserModelDto> GetAllUsers()
+        public async Task LogoutAsync()
+        {
+            await _accessor.HttpContext.SignOutAsync();
+        }
+
+        public async Task UpdateAsync(UserModelDto userDto)
+        {
+            var user = _context
+                .Users
+                .SingleOrDefault(u => u.Id == userDto.Id) ?? throw new NotFoundException("User not found");
+
+            if (user.Email != userDto.Email)
+            {
+                if (!(await GetFirstOrDefaultDtoAsync(x => x.Email == userDto.Email) is null))
+                {
+                    throw new Exception("This email is taken.");
+                }
+            }
+
+            user.FirstName = userDto.FirstName;
+            user.LastName = userDto.LastName;
+            user.ContactNumber = userDto.ContactNumber;
+            user.PostalCode = userDto.PostalCode;
+            user.City = userDto.City;
+            user.Street = userDto.Street;
+            if (userDto.Role != null)
+            {
+                if (userDto.Role == "User")
+                {
+                    user.RoleId = 1;
+                }
+
+                if (userDto.Role == "Manager")
+                {
+                    user.RoleId = 2;
+                }
+
+                if (userDto.Role == "Admin")
+                {
+                    user.RoleId = 3;
+                }
+            }
+            if (userDto.NewPassword != null && userDto.ConfirmNewPassword != null)
+            {
+                user.PasswordHash = _passwordHasher.HashPassword(user, userDto.NewPassword);
+            }
+            _context.Users.Update(user);
+            await Task.CompletedTask;
+        }
+
+        public async Task<bool> UserNameOrPasswordInvalid(LoginModelDto dto)
+        {
+            var user = _context.Users.SingleOrDefault(e => e.Email == dto.Email);
+
+            if (user is null)
+            {
+                return true;
+            }
+
+            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            if (result == PasswordVerificationResult.Failed)
+            {
+                return true;
+            }
+
+            return await Task.FromResult(false);
+        }
+
+        public async Task<IEnumerable<UserModelDto>> GetAllUsersDto()
         {
             var users = _context.Users
                 .Include(r => r.Role)
@@ -71,15 +155,15 @@ namespace Car_Rental_MVC.Repositories
                 usersDto.Add(userDto);
             }
 
-            return usersDto;
+            return await Task.FromResult(usersDto);
         }
 
-        public UserModelDto GetUserInfoDetails(string email)
+        public async Task<UserModelDto> GetUserDetails(int userId)
         {
             var user = _context
                 .Users
                 .Include(r => r.Role)
-                .FirstOrDefault(u => u.Email == email);
+                .SingleOrDefault(u => u.Id == userId) ?? throw new NotFoundException("User not found");
 
             var userDto = _mapper.Map<UserModelDto>(user);
 
@@ -104,82 +188,7 @@ namespace Car_Rental_MVC.Repositories
 
             userDto.Cars = carsDtosList;
 
-            return userDto;
-        }
-
-        public void RegisterUser(RegisterModelDto dto)
-        {
-            var newUser = new User()
-            {
-                Email = dto.Email,
-                FirstName = dto.FirstName,
-                LastName = dto.LastName,
-                RoleId = dto.RoleId
-            };
-
-            var hashedPassword = _passwordHasher.HashPassword(newUser, dto.Password);
-
-            newUser.PasswordHash = hashedPassword;
-            _context.Add(newUser);
-            _context.SaveChanges();
-        }
-
-        public void SaveEditedUserProfile(UserModelDto userDto)
-        {
-            var user = _context
-                .Users
-                .FirstOrDefault(u=> u.Email == userDto.Email);
-
-            if (user == null)
-                throw new Exception();
-
-            user.FirstName = userDto.FirstName;
-            user.LastName = userDto.LastName;
-            user.ContactNumber= userDto.ContactNumber;
-            user.PostalCode= userDto.PostalCode;
-            user.City= userDto.City;
-            user.Street= userDto.Street;
-            if (userDto.Role != null)
-            {
-                if (userDto.Role == "User")
-                {
-                    user.RoleId = 1;
-                }
-
-                if (userDto.Role == "Manager")
-                {
-                    user.RoleId = 2;
-                }
-
-                if (userDto.Role == "Admin")
-                {
-                    user.RoleId = 3;
-                }
-            }
-            if (userDto.NewPassword != null && userDto.ConfirmNewPassword != null) 
-            {
-                user.PasswordHash = _passwordHasher.HashPassword(user, userDto.NewPassword);
-            }
-
-            _context.SaveChanges();
-        }
-
-        public bool UserNameOrPasswordInvalid(LoginModelDto dto)
-        {
-            var user = _context.Users.FirstOrDefault(e => e.Email == dto.Email);
-
-            if (user is null)
-            {
-                return true;
-            }
-
-            var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
-            if (result == PasswordVerificationResult.Failed)
-            {
-                return true;
-            }
-
-            return false;
+            return await Task.FromResult(userDto);
         }
     }
 }

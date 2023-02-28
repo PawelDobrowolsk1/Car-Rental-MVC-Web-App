@@ -1,49 +1,47 @@
 ﻿using AutoMapper;
 using Car_Rental_MVC.Entities;
+using Car_Rental_MVC.Exceptions;
 using Car_Rental_MVC.Models;
+using Car_Rental_MVC.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Car_Rental_MVC.Repositories
 {
-    public class CarRepository : ICarRepository
+    public class CarRepository : Repository<Car, CarModelDto>, ICarRepository
     {
         private readonly CarRentalManagerContext _context;
         private readonly IMapper _mapper;
 
-        public CarRepository(CarRentalManagerContext context, IMapper mapper)
+        public CarRepository(CarRentalManagerContext context, IMapper mapper) : base(context, mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public CarModelDto GetCarById(int carId)
+        public async Task AddCarAsync(CarModelDto carDto)
         {
-            var car = _context
-                .Cars
-                .Find(carId);
-
-            var carDto = _mapper.Map<CarModelDto>(car);
-
-            return carDto;
+            var car = _mapper.Map<Car>(carDto);
+            await AddAsync(car);
         }
 
-        public IEnumerable<CarModelDto> GetAll()
+        public async Task Update(Car car)
         {
-            var cars = _context.Cars.AsEnumerable();
-
-            var carsDtos = _mapper.Map<IEnumerable<CarModelDto>>(cars);
-
-            return carsDtos;
+            _context.Cars.Update(car);
+            await Task.CompletedTask;
         }
+
+        public async Task DeleteCarAsync(int carId)
+        {
+            var car = _context.Cars.SingleOrDefault(x => x.Id == carId) ?? throw new NotFoundException("Car not found");
+            await DeleteAsync(car);
+        }
+
         public async Task RentCarAsync(string email, int carId)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Email == email);
-            var car = _context.Cars.SingleOrDefault(c => c.Id == carId);
-            if (car != null)
-            {
-                car.Available = false;
-            }
+            var user = _context.Users.SingleOrDefault(u => u.Email == email) ?? throw new NotFoundException("User not found");
+            var car = _context.Cars.SingleOrDefault(c => c.Id == carId) ?? throw new NotFoundException("Car not found");
+
+            car.Available = false;
 
             var rentInfo = new RentCarInfo()
             {
@@ -53,14 +51,14 @@ namespace Car_Rental_MVC.Repositories
             };
 
             _context.RentInfo.Add(rentInfo);
-            _context.SaveChanges();
+            await Task.CompletedTask;
         }
 
-        public IEnumerable<CarModelDto> RentedCarsByUser(string email)
+        public async Task<IEnumerable<CarModelDto>> RentedCarsByUser(string email)
         {
             var user = _context
                 .Users
-                .FirstOrDefault(u => u.Email == email);
+                .SingleOrDefault(u => u.Email == email) ?? throw new NotFoundException("User not found");
 
             var rentedCarInfo = _context
                 .RentInfo
@@ -68,35 +66,29 @@ namespace Car_Rental_MVC.Repositories
                 .Where(u => u.UserId == user.Id && u.IsGivenBack == false)
                 .ToList();
 
+            var carsDtosList = new List<CarModelDto>();
             if (rentedCarInfo.Any())
             {
-                var carsDtosList = new List<CarModelDto>();
-
-                for (int i = 0; i < rentedCarInfo.Count(); i++)
+                foreach (var car in rentedCarInfo)
                 {
-                    var carDto = _mapper.Map<CarModelDto>(rentedCarInfo[i].Car);
-                    carsDtosList.Add(carDto);
+                    carsDtosList.Add(_mapper.Map<CarModelDto>(car.Car));
                 }
-
-                return carsDtosList;
+                return await Task.FromResult(carsDtosList);
             }
             return null;
         }
 
-        public void GiveBackCar(string email, int carId)
+        public async Task ReturnCar(string email, int carId)
         {
             var user = _context
                 .Users
-                .SingleOrDefault(u => u.Email == email);
+                .SingleOrDefault(u => u.Email == email) ?? throw new NotFoundException("User not found");
 
             var car = _context
                 .Cars
-                .SingleOrDefault(c => c.Id == carId);
+                .SingleOrDefault(c => c.Id == carId) ?? throw new NotFoundException("Car not found");
 
-            if (car != null)
-            {
                 car.Available = true;
-            }
 
             var rentedInfo = _context
                 .RentInfo
@@ -105,23 +97,7 @@ namespace Car_Rental_MVC.Repositories
             {
                 rentedInfo.IsGivenBack = true;
             }
-
-            _context.SaveChanges();
-        }
-
-        public void AddCar(CarModelDto carDto)
-        {
-            var car = _mapper.Map<Car>(carDto);
-            _context.Cars.Add(car);
-            _context.SaveChanges();
-        }
-
-        public void DeleteCar(int carId)
-        {
-            var car = _context.Cars.SingleOrDefault(c => c.Id == carId);
-
-            _context.Cars.Remove(car);
-            _context.SaveChanges();
+            await Task.CompletedTask;
         }
     }
 }

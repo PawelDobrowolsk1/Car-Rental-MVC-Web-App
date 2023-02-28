@@ -7,6 +7,7 @@ namespace Car_Rental_MVC.Models
 {
     public class UserModelDto
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "The Email field is required")]
         [EmailAddress]
         public string Email { get; set; }

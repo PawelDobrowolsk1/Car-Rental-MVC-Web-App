@@ -110,7 +110,7 @@
                         @Html.DisplayFor(modelItem => item.Horsepower)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details", new {carId=item.Id, returnUrl=Context.Request.Path + "?email=" + Model.Email + "&returnUrl=%2FHome%2FUsersInfo"}, new {@class="btn btn-info"})
+                        @Html.ActionLink("Details", "Details", new {carId=item.Id, returnUrl=Context.Request.Path + "?userId=" + Model.Id + "&returnUrl=%2FHome%2FUsersInfo"}, new {@class="btn btn-info"})
                     </td>
                 </tr>
             }
@@ -118,7 +118,7 @@
     </table>
 }
 <div>
-    @Html.ActionLink("Edit profile", "EditUserProfileByAdmin",new {email = Model.Email, returnUrl = $"/Home/UsersInfo"}, new{@class="btn btn-warning"})
+    @Html.ActionLink("Edit profile", "EditUserProfileByAdmin",new {userId = Model.Id, returnUrl=Context.Request.Path + "?userId=" + Model.Id + "&returnUrl=%2FHome%2FUsersInfo"}, new{@class="btn btn-warning"})
 </div>
 <div class="mt-3">
     @Html.ActionLink("Back", "BackToPreviousPage", new {returnUrl =TempData["ReturnUrl"]}, new{@class="btn btn-secondary"})

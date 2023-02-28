@@ -49,7 +49,7 @@
                         @Html.DisplayFor(modelItem => item.Role)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "UserInfoDetails", new {email = item.Email, returnUrl="/Home/UsersInfo"}, new {@class="btn btn-info"})
+                        @Html.ActionLink("Details", "UserInfoDetails", new {userId = item.Id, returnUrl="/Home/UsersInfo"}, new {@class="btn btn-info"})
                     </td>
                 </tr>
             }

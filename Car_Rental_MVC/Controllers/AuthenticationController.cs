@@ -1,5 +1,6 @@
 ﻿using Car_Rental_MVC.Models;
 using Car_Rental_MVC.Repositories;
+using Car_Rental_MVC.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +9,11 @@ namespace Car_Rental_MVC.Controllers
 {
     public class AuthenticationController : Controller
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public AuthenticationController(IUserRepository userRepository)
+        public AuthenticationController(IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet("Login")]
@@ -39,7 +40,7 @@ namespace Car_Rental_MVC.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
+            await _unitOfWork.User.LogoutAsync();
             return Redirect("/");
         }
 
@@ -48,16 +49,13 @@ namespace Car_Rental_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModelDto dto, string returnUrl)
         {
-            if (_userRepository.UserNameOrPasswordInvalid(dto))
+            if (await _unitOfWork.User.UserNameOrPasswordInvalid(dto))
             {
                 ModelState.AddModelError("LoginError", "Invalid username or password.");
                 return View(dto);
             }
+            await _unitOfWork.User.LoginAsync(dto);
 
-            var claimsPrincipal = _userRepository.GenerateClaimsPrincipal(dto);
-
-            await HttpContext.SignInAsync(claimsPrincipal);
-            
             TempData["success"] = "Successful login!";
             return LocalRedirect(returnUrl ??= "/");
         }
@@ -65,24 +63,24 @@ namespace Car_Rental_MVC.Controllers
         [HttpPost("Register")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(RegisterModelDto dto, string returnUrl)
+        public async Task<IActionResult> Register(RegisterModelDto dto, string returnUrl)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (_userRepository.EmailInUse(dto.Email))
-                {
-                    ModelState.AddModelError("RegisterError", "That email is taken.");
-                    return View(dto);
-                }
-
-                _userRepository.RegisterUser(dto);
-
-                TempData["success"] = "Successful registration!";
-              
-                return LocalRedirect(returnUrl ??= "/");
+                return View(dto);
             }
 
-            return View(dto);
+            if (!(await _unitOfWork.User.GetFirstOrDefaultDtoAsync(x => x.Email == dto.Email) is null))
+            {
+                ModelState.AddModelError("RegisterError", "That email is taken.");
+                return View(dto);
+            }
+
+            await _unitOfWork.User.RegisterAsync(dto);
+            await _unitOfWork.SaveAsync();
+
+            TempData["success"] = "Successful registration!";
+            return LocalRedirect(returnUrl ??= "/");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Car_Rental_MVC.Exceptions;
+﻿using AngleSharp.Text;
+using Car_Rental_MVC.Exceptions;
 using Car_Rental_MVC.Models;
 using Car_Rental_MVC.Repositories;
 using Car_Rental_MVC.Repositories.IRepositories;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics.Eventing.Reader;
+using System.Security.Claims;
 
 namespace Car_Rental_MVC.Controllers
 {
@@ -13,14 +15,10 @@ namespace Car_Rental_MVC.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ICarRepository _carRepository;
-        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ICarRepository carRepository, IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            _carRepository = carRepository;
-            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -46,7 +44,6 @@ namespace Car_Rental_MVC.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Cars()
         {
-            //return View(_carRepository.GetAll());
             return View(await _unitOfWork.Car.GetAllDtoAsync());
         }
 
@@ -55,7 +52,6 @@ namespace Car_Rental_MVC.Controllers
         public async Task<IActionResult> Details(int carId, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
-            //var car = _carRepository.GetCarById(carId);
             var car = await _unitOfWork.Car.GetFirstOrDefaultDtoAsync(x => x.Id == carId);
 
             if(car == null)
@@ -72,7 +68,6 @@ namespace Car_Rental_MVC.Controllers
             {
                 throw new NotFoundException("Car not found");
             }
-            //await _carRepository.RentCarAsync(UserId, carId);
             await _unitOfWork.Car.RentCarAsync(User.Identity.Name, carId);
             await _unitOfWork.SaveAsync();
 
@@ -84,7 +79,6 @@ namespace Car_Rental_MVC.Controllers
         [Authorize]
         public async Task<IActionResult> RentedCars()
         {
-            //return View(_carRepository.RentedCarsByUser(User.Identity.Name));
             return View(await _unitOfWork.Car.RentedCarsByUser(User.Identity.Name));
         }
 
@@ -92,7 +86,6 @@ namespace Car_Rental_MVC.Controllers
         [Authorize]
         public async Task<IActionResult> GiveBackCar(int carId)
         {
-            //_carRepository.GiveBackCar(User.Identity.Name, carId);
             await _unitOfWork.Car.ReturnCar(User.Identity.Name, carId);
             await _unitOfWork.SaveAsync();
 
@@ -116,9 +109,8 @@ namespace Car_Rental_MVC.Controllers
             {
                 return View(carDto);
             }
-
-            //_carRepository.AddCar(carDto);
             await _unitOfWork.Car.AddCarAsync(carDto);
+            await _unitOfWork.SaveAsync();
 
             return Redirect("/Home/Cars");
         }
@@ -126,7 +118,6 @@ namespace Car_Rental_MVC.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCar(int carId)
         {
-            //_carRepository.DeleteCar(carId);
             await _unitOfWork.Car.DeleteCarAsync(carId);
             await _unitOfWork.SaveAsync();
 
@@ -136,59 +127,60 @@ namespace Car_Rental_MVC.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult UsersInfo()
+        public async Task<IActionResult> UsersInfo()
         {
-            return View(_userRepository.GetAllUsers());
+            return View(await _unitOfWork.User.GetAllUsersDto());
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult UserInfoDetails(string email, string returnUrl)
+        public async Task<IActionResult> UserInfoDetails(int userId, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
-            return View(_userRepository.GetUserInfoDetails(email));
+            return View(await _unitOfWork.User.GetUserDetails(userId));
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public IActionResult EditUserProfileByAdmin(string email, string returnUrl)
+        public async Task<IActionResult> EditUserProfileByAdmin(int userId, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
-            TempData["UserEmail"] = email;
-            return View(_userRepository.GetUserInfoDetails(email));
+            return View(await _unitOfWork.User.GetUserDetails(userId));
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
-        public IActionResult EditUserProfileByAdmin(UserModelDto userDto, string UserEmail)
+        public async Task<IActionResult> EditUserProfileByAdmin(int userId, UserModelDto userDto)
         {
-            userDto.Email = UserEmail;
+            userDto.Id= userId;
             ModelState.Remove("Cars");
-            ModelState.Remove("Email");
             if (!ModelState.IsValid)
             {
                 return View(userDto);
             }
-
-            _userRepository.SaveEditedUserProfile(userDto);
+            await _unitOfWork.User.UpdateAsync(userDto);
+            await _unitOfWork.SaveAsync();
 
             return Redirect("/Home/UsersInfo");
         }
 
         [HttpGet]
         [Authorize]
-        public IActionResult EditUserProfileByUser(string email, string returnUrl)
+        public async Task<IActionResult> EditUserProfileByUser(string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
-            return View(_userRepository.GetUserInfoDetails(email));
+            int userId = int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
+
+            return View(await _unitOfWork.User.GetUserDetails(userId));
         }
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult EditUserProfileByUser(UserModelDto userDto)
+        public async Task<IActionResult> EditUserProfileByUser(UserModelDto userDto)
         {
+            userDto.Id = int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
             userDto.Email = User.Identity.Name;
             ModelState.Remove("Email");
             ModelState.Remove("Role");
@@ -197,8 +189,8 @@ namespace Car_Rental_MVC.Controllers
             {
                 return View(userDto);
             }
-            
-            _userRepository.SaveEditedUserProfile(userDto);
+            await _unitOfWork.User.UpdateAsync(userDto);
+            await _unitOfWork.SaveAsync();
 
             return Redirect("/");
         }

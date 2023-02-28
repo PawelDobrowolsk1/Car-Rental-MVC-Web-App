@@ -2,7 +2,8 @@
 {
     public interface IUnitOfWork
     {
-        ICarRepository2 Car { get; }
+        IUserRepository User { get; }
+        ICarRepository Car { get; }
         Task SaveAsync();
     }
 }
