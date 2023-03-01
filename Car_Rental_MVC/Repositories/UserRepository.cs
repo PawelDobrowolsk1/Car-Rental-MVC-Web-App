@@ -65,12 +65,20 @@ namespace Car_Rental_MVC.Repositories
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            await _accessor.HttpContext.SignInAsync(claimsPrincipal);
+            await _accessor.HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                claimsPrincipal,
+                new AuthenticationProperties
+                {
+                    IsPersistent = dto.IsPersistent,
+                    ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
+                });
         }
 
         public async Task LogoutAsync()
         {
-            await _accessor.HttpContext.SignOutAsync();
+            await _accessor.HttpContext.SignOutAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme);
         }
 
         public async Task UpdateAsync(UserModelDto userDto)

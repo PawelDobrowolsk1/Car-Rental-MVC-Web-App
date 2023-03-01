@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Car_Rental_MVC.Models
 {
@@ -10,6 +11,8 @@ namespace Car_Rental_MVC.Models
 
         [Required(ErrorMessage = "The Password field is required")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }    
+        public string Password { get; set; }
+        [DisplayName("Remember me?")]
+        public bool IsPersistent { get; set; } = false;
     }
 }

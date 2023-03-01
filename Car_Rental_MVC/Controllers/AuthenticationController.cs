@@ -16,7 +16,7 @@ namespace Car_Rental_MVC.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        [HttpGet("Login")]
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
         {
@@ -26,7 +26,7 @@ namespace Car_Rental_MVC.Controllers
             }
             return View();
         }
-        [HttpGet("Register")]
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
         {
@@ -44,7 +44,7 @@ namespace Car_Rental_MVC.Controllers
             return Redirect("/");
         }
 
-        [HttpPost("Login")]
+        [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginModelDto dto, string returnUrl)

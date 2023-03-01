@@ -17,7 +17,10 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.SlidingExpiration = true;
+        options.LoginPath = "/Authentication/Login";
+        options.LogoutPath = "/";
     });
 
 builder.Services.AddDbContext<CarRentalManagerContext>
