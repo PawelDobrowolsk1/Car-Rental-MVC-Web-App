@@ -6,7 +6,7 @@ namespace Car_Rental_MVC.Repositories.IRepositories
     public interface ICarRepository : IRepository<Car, CarModelDto>
     {
         Task AddCarAsync(CarModelDto carDto);
-        Task Update(Car car);
+        Task UpdateAsync(CarModelDto carDto);
         Task DeleteCarAsync(int carId);
 
         Task RentCarAsync(string email, int carId);

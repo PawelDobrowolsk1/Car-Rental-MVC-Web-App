@@ -52,9 +52,11 @@ namespace Car_Rental_MVC.Controllers
         public async Task<IActionResult> Details(int carId, string returnUrl)
         {
             TempData["ReturnUrl"] = returnUrl;
-            var car = await _unitOfWork.Car.GetFirstOrDefaultDtoAsync(x => x.Id == carId);
+            var car = await _unitOfWork
+                .Car
+                .GetFirstOrDefaultDtoAsync(x => x.Id == carId) ?? throw new NotFoundException("Car not found.");
 
-            if(car == null)
+            if (car == null)
                 return NotFound();
 
             return View(car);
@@ -115,6 +117,31 @@ namespace Car_Rental_MVC.Controllers
             return Redirect("/Home/Cars");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin, Manager")]
+        public async Task<IActionResult> EditCar(int carId)
+        {
+            return View(
+                await _unitOfWork.Car.GetFirstOrDefaultDtoAsync(x => x.Id == carId) ?? throw new NotFoundException("Car not found.")
+                );
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin, Manager")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCar(int carId, CarModelDto carDto)
+        {
+            carDto.Id = carId;
+            if (!ModelState.IsValid)
+            {
+                return View(carDto);
+            }
+            await _unitOfWork.Car.UpdateAsync(carDto);
+            await _unitOfWork.SaveAsync();
+
+            return Redirect("/Home/Cars");
+        }
+
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCar(int carId)
         {
@@ -153,7 +180,7 @@ namespace Car_Rental_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditUserProfileByAdmin(int userId, UserModelDto userDto)
         {
-            userDto.Id= userId;
+            userDto.Id = userId;
             ModelState.Remove("Cars");
             if (!ModelState.IsValid)
             {
@@ -185,7 +212,7 @@ namespace Car_Rental_MVC.Controllers
             ModelState.Remove("Email");
             ModelState.Remove("Role");
             ModelState.Remove("Cars");
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(userDto);
             }

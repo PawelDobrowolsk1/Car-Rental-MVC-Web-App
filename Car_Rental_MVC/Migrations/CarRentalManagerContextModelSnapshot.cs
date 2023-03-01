@@ -62,7 +62,7 @@ namespace Car_Rental_MVC.Migrations
                     b.Property<int>("Seats")
                         .HasColumnType("int");
 
-                    b.Property<string>("Transmisson")
+                    b.Property<string>("Transmission")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

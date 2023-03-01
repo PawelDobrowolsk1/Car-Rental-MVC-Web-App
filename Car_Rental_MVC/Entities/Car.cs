@@ -12,7 +12,7 @@
         public int Seats { get; set; }
         public int Doors { get; set; }
         public string? Fuel { get; set; }
-        public string Transmisson { get; set; }
+        public string Transmission { get; set; }
         public string? Description { get; set; }
         public bool Available { get; set; } = true;
 

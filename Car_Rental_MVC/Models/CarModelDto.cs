@@ -26,8 +26,8 @@ namespace Car_Rental_MVC.Models
         public int? Doors { get; set; }
         [Required(ErrorMessage = "Car fuel is required")]
         public string? Fuel { get; set; }
-        [Required(ErrorMessage = "The transmisson is required")]
-        public string? Transmisson { get; set; }
+        [Required(ErrorMessage = "The transmission is required")]
+        public string? Transmission { get; set; }
         [DisplayName("Description:")]
         public string? Description { get; set; }
         public bool Available { get; set; }

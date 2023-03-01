@@ -55,7 +55,7 @@
                 @Html.DisplayNameFor(model => model.Doors)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Transmisson)
+                @Html.DisplayNameFor(model => model.Transmission)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Available)
@@ -88,7 +88,7 @@
                     @Html.DisplayFor(modelItem => item.Doors)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Transmisson)
+                    @Html.DisplayFor(modelItem => item.Transmission)
                 </td>
                 <td>
                     @if (item.Available)
@@ -117,6 +117,13 @@
                             @Html.ActionLink("Rent", "RentCar", new {carId = item.Id },
                                                                 new{@class="btn btn-success disabled"})
                         }
+                    }
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        @Html.ActionLink("Edit", "EditCar", new { carId = item.Id },
+                                                            new{@class="btn btn-warning"})
                     }
                 </td>
                 <td>

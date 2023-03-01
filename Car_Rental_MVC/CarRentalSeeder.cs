@@ -73,7 +73,7 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 4,
                     Fuel = "ON",
-                    Transmisson = "Manual"
+                    Transmission = "Manual"
 
                 },
                 new Car()
@@ -87,7 +87,7 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmisson = "Manual"
+                    Transmission = "Manual"
 
                 },
                 new Car()
@@ -101,7 +101,7 @@ namespace Car_Rental_MVC
                     Seats = 2,
                     Doors = 2,
                     Fuel = "PB",
-                    Transmisson = "Manual"
+                    Transmission = "Manual"
 
                 },
                 new Car()
@@ -115,7 +115,7 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmisson = "Automatic"
+                    Transmission = "Automatic"
 
                 },
                 new Car()
@@ -129,7 +129,7 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmisson = "Manual"
+                    Transmission = "Manual"
 
                 },
                 new Car()
@@ -143,7 +143,7 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmisson = "Manual"
+                    Transmission = "Manual"
 
                 },
                 new Car()
@@ -157,7 +157,7 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmisson = "Manual"
+                    Transmission = "Manual"
 
                 }
 

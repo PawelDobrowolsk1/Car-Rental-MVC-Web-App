@@ -24,8 +24,25 @@ namespace Car_Rental_MVC.Repositories
             await AddAsync(car);
         }
 
-        public async Task Update(Car car)
+        public async Task UpdateAsync(CarModelDto carDto)
         {
+            var car = _context
+                .Cars
+                .SingleOrDefault(x => x.Id == carDto.Id) ?? throw new NotFoundException("Car not found.");
+
+            car.Category = carDto.Category;
+            car.Make = carDto.Make;
+            car.Model = carDto.Model;
+            car.Engine = carDto.Engine??= 1;
+            car.Horsepower = carDto.Horsepower ??= 100;
+            car.Year = carDto.Year??=2000;
+            car.Seats = carDto.Seats ??= 5;
+            car.Doors = carDto.Doors ??= 5;
+            car.Fuel = carDto.Fuel;
+            car.Transmission = carDto.Transmission ??= "Manual";
+            car.Description = carDto.Description;
+            car.Available = carDto.Available;
+
             _context.Cars.Update(car);
             await Task.CompletedTask;
         }
