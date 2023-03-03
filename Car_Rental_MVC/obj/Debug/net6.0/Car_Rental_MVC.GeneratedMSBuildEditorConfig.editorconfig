@@ -16,52 +16,68 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\Paweł\Desktop\IT\.Kurs_C#\.Programs\#.My_Programs\CarRental\CarRental_ASP.NET MVC\Car_Rental_MVC\Car_Rental_MVC
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Authentication/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cTG9naW4uY3NodG1s
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Client/Views/Cars/AddCar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xpZW50XFZpZXdzXENhcnNcQWRkQ2FyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Authentication/Register.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGljYXRpb25cUmVnaXN0ZXIuY3NodG1s
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Client/Views/Cars/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xpZW50XFZpZXdzXENhcnNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/AddCar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRDYXIuY3NodG1s
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Client/Views/Cars/EditCar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xpZW50XFZpZXdzXENhcnNcRWRpdENhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/Cars.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYXJzLmNzaHRtbA==
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Client/Views/Cars/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xpZW50XFZpZXdzXENhcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXRhaWxzLmNzaHRtbA==
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Client/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xpZW50XFZpZXdzXEhvbWVcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/EditCar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0Q2FyLmNzaHRtbA==
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Client/Views/Home/RentedCars.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xpZW50XFZpZXdzXEhvbWVcUmVudGVkQ2Fycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/EditUserProfileByAdmin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0VXNlclByb2ZpbGVCeUFkbWluLmNzaHRtbA==
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Client/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xpZW50XFZpZXdzXF9WaWV3SW1wb3J0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/EditUserProfileByUser.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFZGl0VXNlclByb2ZpbGVCeVVzZXIuY3NodG1s
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Client/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQ2xpZW50XFZpZXdzXF9WaWV3U3RhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Identity/Views/Account/EditUser.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxFZGl0VXNlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/RentedCars.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZW50ZWRDYXJzLmNzaHRtbA==
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Identity/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/UserInfoDetails.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVc2VySW5mb0RldGFpbHMuY3NodG1s
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Identity/Views/Account/Manage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxNYW5hZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Home/UsersInfo.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVc2Vyc0luZm8uY3NodG1s
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Identity/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Identity/Views/Account/UserInfoDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxVc2VySW5mb0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Identity/Views/Account/UsersInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcQWNjb3VudFxVc2Vyc0luZm8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Identity/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Areas/Identity/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Paweł/Desktop/IT/.Kurs_C\#/.Programs/\#.My_Programs/CarRental/CarRental_ASP.NET MVC/Car_Rental_MVC/Car_Rental_MVC/Views/Shared/_AuthenticationLayout.cshtml]

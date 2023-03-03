@@ -31,5 +31,7 @@ namespace Car_Rental_MVC.Models
         [DisplayName("Description:")]
         public string? Description { get; set; }
         public bool Available { get; set; }
+        [DisplayName("Image:")]
+        public string ImageUrl { get; set; }
     }
 }

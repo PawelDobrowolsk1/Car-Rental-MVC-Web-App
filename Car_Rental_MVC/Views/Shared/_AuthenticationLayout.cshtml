@@ -7,10 +7,10 @@
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Sign In</a>
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Sign In</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Authentication" asp-action="Register" asp-route-returnUrl="@Context.Request.Path">Sign Up</a>
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Context.Request.Path">Sign Up</a>
                     </li>
                 </ul>
                 <div class="card-content">

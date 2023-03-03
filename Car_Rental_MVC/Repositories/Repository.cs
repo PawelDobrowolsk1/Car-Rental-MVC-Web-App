@@ -19,11 +19,18 @@ namespace Car_Rental_MVC.Repositories
             _mapper = mapper;
             dbSet = _context.Set<T>();
         }
-        public async Task<Dto> GetFirstOrDefaultDtoAsync(Expression<Func<T, bool>> filter)
+        public async Task<Dto> GetFirstOrDefaultDtoAsync(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
             query = query.Where(filter);
+            if (includeProperties != null)
+            {
+                foreach(var property in includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(property);
+                }
+            }
             var queryDto = _mapper.Map<Dto>(query.FirstOrDefault());
 
             return await Task.FromResult(queryDto);

@@ -4,17 +4,17 @@
         @if(User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="UsersInfo">Users Info</a>
+                <a class="nav-link text-light" asp-area="Identity" asp-controller="Account" asp-action="UsersInfo">Users Info</a>
             </li>    
         }
         <li class="nav-item">
-            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="RentedCars">Rented Cars</a>
+            <a class="nav-link text-light" asp-area="Client" asp-controller="Home" asp-action="RentedCars">Rented Cars</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-light" title="Manage" asp-area="" asp-controller="Home" asp-action="EditUserProfileByUser" asp-route-returnUrl="@Context.Request.Path">Hello @User.Identity.Name!</a>
+            <a class="nav-link text-light" title="Manage" asp-area="Identity" asp-controller="Account" asp-action="Manage" asp-route-returnUrl="@Context.Request.Path">Hello @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
-            <form class="form-inline" asp-controller="Authentication" asp-action="Logout">
+            <form class="form-inline" asp-area="Identity" asp-controller="Account" asp-action="Logout">
                 <button type="submit" class="nav-link btn btn-link text-light">Logout</button>
             </form>
         </li>
@@ -22,10 +22,10 @@
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-light" asp-controller="Authentication" asp-action="Register" asp-route-returnUrl="@Context.Request.Path">Register</a>
+             <a class="nav-link text-light" asp-area="Identity" asp-controller="Account" asp-action="Register" asp-route-returnUrl="@Context.Request.Path">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-light" asp-controller="Authentication" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Login</a>
+            <a class="nav-link text-light" asp-area="Identity" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Login</a>
         </li>
     }
 </ul>
