@@ -48,7 +48,7 @@ namespace Car_Rental_MVC.Areas.Identity.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModelDto dto, string returnUrl)
+        public async Task<IActionResult> Login(LoginModelDto dto, string? returnUrl)
         {
             if (await _unitOfWork.User.UserNameOrPasswordInvalid(dto))
             {
@@ -61,7 +61,7 @@ namespace Car_Rental_MVC.Areas.Identity.Controllers
             return LocalRedirect(returnUrl ??= "/");
         }
 
-        [HttpPost("Register")]
+        [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModelDto dto, string returnUrl)

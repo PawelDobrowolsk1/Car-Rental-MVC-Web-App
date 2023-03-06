@@ -1,6 +1,49 @@
-﻿@{
-    ViewData["Title"] = "Index";
-}
+﻿@model IEnumerable<Car_Rental_MVC.Models.CarModelDto>
+
 
 <h1 class="text-center">Car Rental</h1>
+
+<div class="row pb-3">
+    @foreach(var car in Model)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="row p-2">
+                <div class="col-12 p-1">
+                    <div class="card">
+                        <img src="@car.ImageUrl" class="card-img-top" height="220"/>
+
+                       <div class="card-body">
+                           <div class="text-black" style="text-align:center; font-size:20px;">
+                                <p><b>@car.Make @car.Model</b></p>
+                           </div>
+                            <table style="width:100%">
+                                <tr>
+                                    <td> <i class="bi bi-fire"></i>&nbsp; Engine</td>
+                                    <td><b>@car.Engine</b></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-lightning-fill"></i> &nbsp; HP</td>
+                                    <td><b>@car.Horsepower</b></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="bi bi-stopwatch-fill"></i> &nbsp; 0-100 km/h</td>
+                                    <td><b> 10 s</b></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <a asp-controller="Cars" asp-action="Details" asp-route-id="@car.Id" asp-route-returnUrl="@Context.Request.Path" class="btn btn-info form-control">Details</a>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    }
+
+
+</div>
+
 

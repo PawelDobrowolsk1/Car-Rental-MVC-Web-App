@@ -13,6 +13,38 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\images\\cars\\1.jpg",
+      "PackagePath": "staticwebassets\\images\\cars\\1.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\images\\cars\\2.jpg",
+      "PackagePath": "staticwebassets\\images\\cars\\2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\images\\cars\\3.jpg",
+      "PackagePath": "staticwebassets\\images\\cars\\3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\images\\cars\\4.jpg",
+      "PackagePath": "staticwebassets\\images\\cars\\4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\images\\cars\\5.jpg",
+      "PackagePath": "staticwebassets\\images\\cars\\5.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\images\\cars\\6.jpg",
+      "PackagePath": "staticwebassets\\images\\cars\\6.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\images\\cars\\6f091a95-5bfb-4830-9d3d-bce186fb3f6e.jpg",
+      "PackagePath": "staticwebassets\\images\\cars\\6f091a95-5bfb-4830-9d3d-bce186fb3f6e.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\images\\cars\\7.jpg",
+      "PackagePath": "staticwebassets\\images\\cars\\7.jpg"
+    },
+    {
       "Id": "C:\\Users\\Paweł\\Desktop\\IT\\.Kurs_C#\\.Programs\\#.My_Programs\\CarRental\\CarRental_ASP.NET MVC\\Car_Rental_MVC\\Car_Rental_MVC\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

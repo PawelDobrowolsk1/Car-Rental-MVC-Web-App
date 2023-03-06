@@ -51,6 +51,10 @@ namespace Car_Rental_MVC.Migrations
                     b.Property<int>("Horsepower")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Make")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

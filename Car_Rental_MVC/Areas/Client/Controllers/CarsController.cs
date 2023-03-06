@@ -3,21 +3,24 @@ using Car_Rental_MVC.Models;
 using Car_Rental_MVC.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Car_Rental_MVC.Areas.Client.Controllers
 {
     public class CarsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public CarsController(IUnitOfWork unitOfWork)
+        public CarsController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Cars()
         {
             return View(await _unitOfWork.Car.GetAllDtoAsync());
         }
@@ -45,16 +48,18 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
             {
                 throw new NotFoundException("Car not found");
             }
-            await _unitOfWork.Car.RentCarAsync(User.Identity.Name, carId);
+            var userId = int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
+
+            await _unitOfWork.Car.RentCarAsync(userId, carId);
             await _unitOfWork.SaveAsync();
 
             TempData["success"] = "Car successfully rented ";
-            return RedirectToAction("Index");
+            return RedirectToAction("Cars");
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin, Manager")]
-        public IActionResult AddCar()
+        public IActionResult Add()
         {
             return View();
         }
@@ -62,21 +67,36 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin, Manager")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddCar(CarModelDto carDto)
+        public async Task<IActionResult> Add(CarModelDto carDto, IFormFile? file)
         {
             if (!ModelState.IsValid)
             {
                 return View(carDto);
             }
+
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                string fileName = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(wwwRootPath, @"images\cars");
+                var extension = Path.GetExtension(file.FileName);
+
+                using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                {
+                    file.CopyTo(fileStreams);
+                }
+                carDto.ImageUrl = @"\images\cars\" + fileName + extension;
+            }
             await _unitOfWork.Car.AddCarAsync(carDto);
             await _unitOfWork.SaveAsync();
 
-            return RedirectToAction("Index");
+            TempData["success"] = "Car successfully added";
+            return RedirectToAction("Cars");
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin, Manager")]
-        public async Task<IActionResult> EditCar(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             return View(
                 await _unitOfWork.Car.GetFirstOrDefaultDtoAsync(x => x.Id == id) ?? throw new NotFoundException("Car not found.")
@@ -86,17 +106,38 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin, Manager")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditCar(int id, CarModelDto carDto)
+        public async Task<IActionResult> Edit(CarModelDto carDto, IFormFile? file)
         {
-            carDto.Id = id;
             if (!ModelState.IsValid)
             {
                 return View(carDto);
             }
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (file != null)
+            {
+                var oldImagePath = Path.Combine(wwwRootPath, carDto.ImageUrl.TrimStart('\\'));
+                if (carDto.ImageUrl != null)
+                {
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+                string fileName = Guid.NewGuid().ToString();
+                var uploads = Path.Combine(wwwRootPath, @"images\cars");
+                var extension = Path.GetExtension(file.FileName);
+
+                using (var fileStreams = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                {
+                    file.CopyTo(fileStreams);
+                }
+                carDto.ImageUrl = @"\images\cars\" + fileName + extension;
+            }
+
             await _unitOfWork.Car.UpdateAsync(carDto);
             await _unitOfWork.SaveAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Cars");
         }
 
         [Authorize(Roles = "Admin")]
@@ -105,8 +146,8 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
             await _unitOfWork.Car.DeleteCarAsync(id);
             await _unitOfWork.SaveAsync();
 
-            TempData["success"] = "Car successfully deleted ";
-            return RedirectToAction("Index");
+            TempData["success"] = "Car successfully deleted";
+            return RedirectToAction("Cars");
         }
     }
 }

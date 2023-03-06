@@ -14,6 +14,8 @@
         public string? Fuel { get; set; }
         public string Transmission { get; set; }
         public string? Description { get; set; }
+
+        public string ImageUrl { get; set; }
         public bool Available { get; set; } = true;
 
         public virtual RentCarInfo RentedCarInfo { get; set; }

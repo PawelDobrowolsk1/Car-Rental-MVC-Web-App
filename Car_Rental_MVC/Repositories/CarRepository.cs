@@ -42,6 +42,7 @@ namespace Car_Rental_MVC.Repositories
             car.Transmission = carDto.Transmission ??= "Manual";
             car.Description = carDto.Description;
             car.Available = carDto.Available;
+            car.ImageUrl= carDto.ImageUrl;
 
             _context.Cars.Update(car);
             await Task.CompletedTask;
@@ -53,9 +54,9 @@ namespace Car_Rental_MVC.Repositories
             await DeleteAsync(car);
         }
 
-        public async Task RentCarAsync(string email, int carId)
+        public async Task RentCarAsync(int userId, int carId)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Email == email) ?? throw new NotFoundException("User not found");
+            var user = _context.Users.SingleOrDefault(u => u.Id == userId) ?? throw new NotFoundException("User not found");
             var car = _context.Cars.SingleOrDefault(c => c.Id == carId) ?? throw new NotFoundException("Car not found");
 
             car.Available = false;
@@ -71,11 +72,11 @@ namespace Car_Rental_MVC.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<CarModelDto>> RentedCarsByUser(string email)
+        public async Task<IEnumerable<CarModelDto>> RentedCarsByUser(int userId)
         {
             var user = _context
                 .Users
-                .SingleOrDefault(u => u.Email == email) ?? throw new NotFoundException("User not found");
+                .SingleOrDefault(u => u.Id == userId) ?? throw new NotFoundException("User not found");
 
             var rentedCarInfo = _context
                 .RentInfo
@@ -95,11 +96,11 @@ namespace Car_Rental_MVC.Repositories
             return null;
         }
 
-        public async Task ReturnCar(string email, int carId)
+        public async Task ReturnCar(int userId, int carId)
         {
             var user = _context
                 .Users
-                .SingleOrDefault(u => u.Email == email) ?? throw new NotFoundException("User not found");
+                .SingleOrDefault(u => u.Id == userId) ?? throw new NotFoundException("User not found");
 
             var car = _context
                 .Cars

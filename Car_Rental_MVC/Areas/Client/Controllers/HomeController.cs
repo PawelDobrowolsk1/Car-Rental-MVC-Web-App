@@ -24,23 +24,26 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _unitOfWork.Car.GetAllDtoAsync());
         }
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> RentedCars()
         {
-            return View(await _unitOfWork.Car.RentedCarsByUser(User.Identity.Name));
+            var userId = int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
+            return View(await _unitOfWork.Car.RentedCarsByUser(userId));
         }
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GiveBackCar(int carId)
         {
-            await _unitOfWork.Car.ReturnCar(User.Identity.Name, carId);
+            var userId = int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
+
+            await _unitOfWork.Car.ReturnCar(userId, carId);
             await _unitOfWork.SaveAsync();
 
             TempData["success"] = "Car successfully returned";

@@ -1,0 +1,143 @@
+﻿@model IEnumerable<Car_Rental_MVC.Models.CarModelDto>
+
+@{
+    ViewData["Title"] = "Cars";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.ReturnUrl = "/Home/Cars";
+}
+
+<h1 class="text-center">Cars</h1>
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-secondary" asp-area="Client" asp-controller="Home"  asp-action="Index">Back to Home</a>
+    </div>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-6 text-lg-end">
+            <a class="btn btn-success" asp-area="Identity" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@Context.Request.Path">Rent a car</a>
+        </div>
+    }
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+        {
+            <div class="col-md-6 text-lg-end">
+                <a class="btn btn-warning" asp-area="Client" asp-controller="Cars" asp-action="Add" asp-route-returnUrl="@Context.Request.Path">
+                    <i class="bi bi-plus-circle"></i>&nbsp; Add a car
+                </a>
+            </div>
+        }
+
+    }
+
+</div>
+<table class="table mt-3">
+    <thead>
+
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Make)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Engine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Horsepower)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doors)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transmission)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Available)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Make)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Model)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Engine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Horsepower)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seats)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doors)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Transmission)
+                </td>
+                <td>
+                    @if (item.Available)
+                    {
+                        @Html.DisplayName("Yes")
+                    }
+                    else
+                    {
+                        @Html.DisplayName("No")
+                    }
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new {id=item.Id, returnUrl=Context.Request.Path}, new {@class="btn btn-info"})
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (item.Available)
+                        {
+                            @Html.ActionLink("Rent", "RentCar", new {carId = item.Id },
+                                                                new{@class="btn btn-success"})
+
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Rent", "RentCar", new {carId = item.Id },
+                                                                new{@class="btn btn-success disabled"})
+                        }
+                    }
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <a asp-controller="Cars" asp-action="Edit" asp-route-id=@item.Id class="btn btn-warning ">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                    }
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Cars" asp-action="DeleteCar" asp-route-id=@item.Id class="btn btn-danger ">
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

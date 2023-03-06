@@ -93,6 +93,7 @@ namespace Car_Rental_MVC.Repositories
                 {
                     throw new Exception("This email is taken.");
                 }
+                user.Email = userDto.Email;
             }
 
             user.FirstName = userDto.FirstName;

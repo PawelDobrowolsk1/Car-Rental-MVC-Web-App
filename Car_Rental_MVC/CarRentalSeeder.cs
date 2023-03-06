@@ -73,8 +73,8 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 4,
                     Fuel = "ON",
-                    Transmission = "Manual"
-
+                    Transmission = "Manual",
+                    ImageUrl=@"\images\cars\1.jpg"
                 },
                 new Car()
                 {
@@ -87,8 +87,8 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmission = "Manual"
-
+                    Transmission = "Manual",
+                    ImageUrl=@"\images\cars\2.jpg"
                 },
                 new Car()
                 {
@@ -101,8 +101,8 @@ namespace Car_Rental_MVC
                     Seats = 2,
                     Doors = 2,
                     Fuel = "PB",
-                    Transmission = "Manual"
-
+                    Transmission = "Manual",
+                    ImageUrl=@"\images\cars\3.jpg"
                 },
                 new Car()
                 {
@@ -115,8 +115,8 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmission = "Automatic"
-
+                    Transmission = "Automatic",
+                    ImageUrl=@"\images\cars\4.jpg"
                 },
                 new Car()
                 {
@@ -129,8 +129,8 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmission = "Manual"
-
+                    Transmission = "Manual",
+                    ImageUrl=@"\images\cars\5.jpg"
                 },
                 new Car()
                 {
@@ -143,8 +143,8 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmission = "Manual"
-
+                    Transmission = "Manual",
+                    ImageUrl=@"\images\cars\6.jpg"
                 },
                 new Car()
                 {
@@ -157,8 +157,8 @@ namespace Car_Rental_MVC
                     Seats = 5,
                     Doors = 5,
                     Fuel = "PB",
-                    Transmission = "Manual"
-
+                    Transmission = "Manual",
+                    ImageUrl=@"\images\cars\7.jpg"
                 }
 
             };

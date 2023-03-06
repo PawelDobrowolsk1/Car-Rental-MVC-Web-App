@@ -9,8 +9,8 @@ namespace Car_Rental_MVC.Repositories.IRepositories
         Task UpdateAsync(CarModelDto carDto);
         Task DeleteCarAsync(int carId);
 
-        Task RentCarAsync(string email, int carId);
-        Task<IEnumerable<CarModelDto>> RentedCarsByUser(string email);
-        Task ReturnCar(string email, int carId);
+        Task RentCarAsync(int userId, int carId);
+        Task<IEnumerable<CarModelDto>> RentedCarsByUser(int userId);
+        Task ReturnCar(int userId, int carId);
     }
 }
