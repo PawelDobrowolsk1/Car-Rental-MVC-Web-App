@@ -48,6 +48,11 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
             {
                 throw new NotFoundException("Car not found");
             }
+            if (!(await _unitOfWork.Car.GetFirstOrDefaultDtoAsync(x => x.Id == carId)).Available)
+            {
+                throw new BadRequestException("Oops something went wrong");
+            }
+
             var userId = int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
             await _unitOfWork.Car.RentCarAsync(userId, carId);

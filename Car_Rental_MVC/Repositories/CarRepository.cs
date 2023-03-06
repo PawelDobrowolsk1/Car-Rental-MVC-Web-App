@@ -110,7 +110,7 @@ namespace Car_Rental_MVC.Repositories
 
             var rentedInfo = _context
                 .RentInfo
-                .SingleOrDefault(x => x.UserId == user.Id && x.CarId == car.Id && x.IsGivenBack == false);
+                .SingleOrDefault(x => x.UserId == user.Id && x.CarId == car.Id && x.IsGivenBack == false) ?? throw new BadRequestException("Oops something went wrong");
             if (rentedInfo != null)
             {
                 rentedInfo.IsGivenBack = true;
