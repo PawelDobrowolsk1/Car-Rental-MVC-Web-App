@@ -67,7 +67,7 @@
                         @Html.DisplayFor(modelItem => item.Transmission)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "Details","Cars", new { id=item.Id, returnUrl=Context.Request.Path }, new{@class="btn btn-info"})
+                        @Html.ActionLink("Details", "Details", "Cars", new { id=item.Id, returnUrl=Context.Request.Path }, new{@class="btn btn-info"})
                         @Html.ActionLink("Give Back", "GiveBackCar", new { carId=item.Id }, 
                                                                      new {@class="btn btn-warning"})
                     </td>
@@ -78,5 +78,5 @@
 }
 else
 {
-    <h3>No rented cars ----> <a asp-area="Client" asp-controller="Cars" asp-action="Cars">Rent a car</a></h3>
+    <h3>No rented cars ----> <a asp-area="Home" asp-controller="Cars" asp-action="Index">Rent a car</a></h3>
 }

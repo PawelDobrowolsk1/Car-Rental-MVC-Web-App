@@ -9,7 +9,7 @@
 <h1 class="text-center">Cars</h1>
 <div class="row">
     <div class="col-md-6">
-        <a class="btn btn-secondary" asp-area="Client" asp-controller="Home"  asp-action="Index">Back to Home</a>
+        <a class="btn btn-secondary" asp-controller="Home"  asp-action="Index">Back to Home</a>
     </div>
     @if (!User.Identity.IsAuthenticated)
     {
@@ -22,7 +22,7 @@
         @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
         {
             <div class="col-md-6 text-lg-end">
-                <a class="btn btn-warning" asp-area="Client" asp-controller="Cars" asp-action="Add" asp-route-returnUrl="@Context.Request.Path">
+                <a class="btn btn-warning" asp-area="Home" asp-controller="Cars" asp-action="Add" asp-route-returnUrl="@Context.Request.Path">
                     <i class="bi bi-plus-circle"></i>&nbsp; Add a car
                 </a>
             </div>

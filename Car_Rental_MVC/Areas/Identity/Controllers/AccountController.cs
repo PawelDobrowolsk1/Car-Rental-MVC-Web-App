@@ -64,7 +64,7 @@ namespace Car_Rental_MVC.Areas.Identity.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterModelDto dto, string returnUrl)
+        public async Task<IActionResult> Register(RegisterModelDto dto, string? returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -86,24 +86,24 @@ namespace Car_Rental_MVC.Areas.Identity.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UsersInfo()
+        public async Task<IActionResult> Users()
         {
             return View(await _unitOfWork.User.GetAllUsersDto());
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> UserInfoDetails(int id, string returnUrl)
+        public async Task<IActionResult> UserDetails(int id, string? returnUrl)
         {
-            TempData["ReturnUrl"] = returnUrl;
+            TempData["ReturnUrl"] = returnUrl ??= "/";
             return View(await _unitOfWork.User.GetUserDetails(id));
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> EditUser(int id, string returnUrl)
+        public async Task<IActionResult> EditUser(int id, string? returnUrl)
         {
-            TempData["ReturnUrl"] = returnUrl;
+            TempData["ReturnUrl"] = returnUrl ??= "/";
             return View(await _unitOfWork.User.GetUserDetails(id));
         }
 
@@ -125,9 +125,9 @@ namespace Car_Rental_MVC.Areas.Identity.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Manage(string returnUrl)
+        public async Task<IActionResult> Manage(string? returnUrl)
         {
-            TempData["ReturnUrl"] = returnUrl;
+            TempData["ReturnUrl"] = returnUrl ??= "/";
             int userId = int.Parse(User.FindFirst(x => x.Type == ClaimTypes.NameIdentifier).Value);
 
             return View(await _unitOfWork.User.GetFirstOrDefaultDtoAsync(x => x.Id == userId));

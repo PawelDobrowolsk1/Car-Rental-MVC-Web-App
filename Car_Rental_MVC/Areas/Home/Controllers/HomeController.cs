@@ -6,10 +6,11 @@ using Car_Rental_MVC.Repositories.IRepositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Security.Claims;
 
-namespace Car_Rental_MVC.Areas.Client.Controllers
+namespace Car_Rental_MVC.Areas.Home.Controllers
 {
 
     [Authorize]
@@ -50,6 +51,33 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
             return Redirect("RentedCars");
         }
 
-
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [AllowAnonymous]
+        public IActionResult Error(int statusCode)
+        {
+            if (statusCode == 404)
+            {
+                return View(new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                    ErrorCode = statusCode,
+                    ErrorMessage = "The site you looking for is not found. Why don't you go to the "
+                });
+            }
+            else if (statusCode == 500)
+            {
+                return View(new ErrorViewModel
+                {
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                    ErrorCode = statusCode,
+                    ErrorMessage = "Oopss. We had an issue on our website. Why don't you go to the "
+                });
+            }
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                ErrorCode = statusCode
+            });
+        }
     }
 }

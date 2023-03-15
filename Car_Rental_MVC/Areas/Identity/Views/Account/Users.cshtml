@@ -4,7 +4,7 @@
     ViewData["Title"] = "UsersInfo";
 }
 
-<h1>Users info</h1>
+<h1>All Users</h1>
 
 @if(Model != null)
 {
@@ -49,7 +49,7 @@
                         @Html.DisplayFor(modelItem => item.Role)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "UserInfoDetails", new {id = item.Id}, new {@class="btn btn-info"})
+                        @Html.ActionLink("Details", "UserDetails", new {id = item.Id}, new {@class="btn btn-info"})
                     </td>
                 </tr>
             }

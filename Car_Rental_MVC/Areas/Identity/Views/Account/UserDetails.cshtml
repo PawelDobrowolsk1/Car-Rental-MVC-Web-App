@@ -109,8 +109,8 @@
                         @Html.DisplayFor(modelItem => item.Horsepower)
                     </td>
                     <td>
-                        <a asp-area="Client" asp-controller="Cars" asp-action="Details" asp-route-id="@item.Id"
-                            asp-route-returnUrl="@Context.Request.Path?userId=@Model.Id&returnUrl=%2FIdentity%2FAccount%2FUsersInfo" class="btn btn-info">Details</a>
+                        <a asp-area="Home" asp-controller="Cars" asp-action="Details" asp-route-id="@item.Id"
+                            asp-route-returnUrl="@Context.Request.Path?userId=@Model.Id&returnUrl=%2FIdentity%2FAccount%2FUsers" class="btn btn-info">Details</a>
                     </td>
                 </tr>
             }
@@ -119,6 +119,6 @@
 }
 <div>
     @Html.ActionLink("Edit", "EditUser", new {id = Model.Id,
-    returnUrl=Context.Request.Path + "?userId=" + Model.Id + "&returnUrl=%2FIdentity%2FAccount%2FUsersInfo"}, new{@class="btn btn-warning"})
-    <a href="/Identity/Account/UsersInfo" class="btn btn-secondary">Back</a>
+    returnUrl=Context.Request.Path + "?userId=" + Model.Id + "&returnUrl=%2FIdentity%2FAccount%2FUsers"}, new{@class="btn btn-warning"})
+    <a href="/Identity/Account/Users" class="btn btn-secondary">Back</a>
 </div>

@@ -4,11 +4,11 @@
         @if(User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="nav-link text-light" asp-area="Identity" asp-controller="Account" asp-action="UsersInfo">Users Info</a>
+                <a class="nav-link text-light" asp-area="Identity" asp-controller="Account" asp-action="Users"> Users </a>
             </li>    
         }
         <li class="nav-item">
-            <a class="nav-link text-light" asp-area="Client" asp-controller="Home" asp-action="RentedCars">Rented Cars</a>
+            <a class="nav-link text-light" asp-area="Home" asp-controller="Home" asp-action="RentedCars">Rented Cars</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-light" title="Manage" asp-area="Identity" asp-controller="Account" asp-action="Manage" asp-route-returnUrl="@Context.Request.Path">Hello @User.Identity.Name!</a>

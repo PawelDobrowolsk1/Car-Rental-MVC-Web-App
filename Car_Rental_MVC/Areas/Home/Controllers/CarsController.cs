@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Car_Rental_MVC.Areas.Client.Controllers
+namespace Car_Rental_MVC.Areas.Home.Controllers
 {
     public class CarsController : Controller
     {
@@ -20,22 +20,23 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Cars()
+        public async Task<IActionResult> Index()
         {
             return View(await _unitOfWork.Car.GetAllDtoAsync());
         }
 
+
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int id, string returnUrl)
+        public async Task<IActionResult> Details(int id, string? returnUrl)
         {
-            TempData["ReturnUrl"] = returnUrl;
+            TempData["ReturnUrl"] = returnUrl ??= "/";
             var car = await _unitOfWork
                 .Car
-                .GetFirstOrDefaultDtoAsync(x => x.Id == id) ?? throw new NotFoundException("Car not found.");
+                .GetFirstOrDefaultDtoAsync(x => x.Id == id);
 
             if (car == null)
-                return NotFound();
+                return NotFound("Car not found");
 
             return View(car);
         }
@@ -59,7 +60,7 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
             await _unitOfWork.SaveAsync();
 
             TempData["success"] = "Car successfully rented ";
-            return RedirectToAction("Cars");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -96,7 +97,7 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
             await _unitOfWork.SaveAsync();
 
             TempData["success"] = "Car successfully added";
-            return RedirectToAction("Cars");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -142,7 +143,7 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
             await _unitOfWork.Car.UpdateAsync(carDto);
             await _unitOfWork.SaveAsync();
 
-            return RedirectToAction("Cars");
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Admin")]
@@ -152,7 +153,7 @@ namespace Car_Rental_MVC.Areas.Client.Controllers
             await _unitOfWork.SaveAsync();
 
             TempData["success"] = "Car successfully deleted";
-            return RedirectToAction("Cars");
+            return RedirectToAction("Index");
         }
     }
 }
